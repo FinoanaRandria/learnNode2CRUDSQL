@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+     <h1>Node && SQL</h1>
+
+      
+
+     <h1>Formulaire d'ajout</h1>
+
+     <form action="/notes" method="post">
+              <input type="hidden" name="id" id="id">
+         <label for="titre">Titre</label>
+         <br>           
+         <input type="text" id="titre" name="titre">
+         <br>
+          <label for="description">Description</label>
+          <br>
+           <textarea name="description" id="description" cols="30" rows="10"></textarea>
+             <br>
+                <button type="submit"> ajouter</button>
+     </form>
+
+
+     <h2>liste des notes</h2>
+        <% for(i=0; i<resultat.length; i++){ %>
+                   <h2><%= resultat[i].titre %></h2>
+                   <h3> <%= resultat[i].description %></h3>
+
+                   <input type="button" value="Supprimer" onclick="Supprimer('<%=resultat[i].id %>')">
+                   <input type="button" value="Modifier" onclick="remplirDonnees('<%= resultat[i].id %>','<%= resultat[i].titre %>','<%= resultat[i].description %>')">
+        <% } %>
+
+
+
+
+
+     <script>
+          function remplirDonnees (id,titre,desc){
+              document.getElementById('id').value= id;
+              document.getElementById('titre').value= titre;
+              document.getElementById('description').value= desc;
+          }
+
+          function Supprimer (id){
+           
+
+          const pointFinal = "notes/" + id
+           
+          fetch(
+               pointFinal, {method : "DELETE"}
+          ).then(
+               (reponse)=> reponse.json()
+          ).then((donnee)=> window.location.href = donnee.routeRacine)
+          .catch(err=>{
+                  console.log(err);
+          })
+
+          }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     </script>
+
+</body>
+</html>
